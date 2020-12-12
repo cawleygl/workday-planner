@@ -66,6 +66,13 @@ textarea{
   color: white;
 }
 
+.saveBtn:hover {
+  background-color: #ffffff;
+  color: #06AED5;
+  border-color: #06AED5;
+  transition: all .3s ease-in-out;
+}
+
 .saveBtn i:hover {
   font-size: 20px;
   transition: all .3s ease-in-out;

@@ -90,10 +90,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script type="text/javascript">
 
-    //sets hour from moment.js to variable
-    var hour = moment().format("H");
+
     //write date in currentDay <p> at the top
-    $("#currentDay").text(moment().format("dddd") + ", " + moment().format("MMMM Do"));
+    function updateDay() {
+      $("#currentDay").text(moment().format("dddd") + ", " + moment().format("MMMM Do"));
+    }
+
+    updateDay();
+
     //global variables selecting textareas
     var blocks = $("textarea");
     var block9 = $("#block9");
@@ -107,84 +111,93 @@
     var block5 = $("#block5");
 
     //Change timeblocks' color using classes depending on time of day (using hour variable)
-    if (hour < 9) {
-      blocks.addClass("future");
-    } else if (hour === 9) {
-      blocks.addClass("future");
-      block9.removeClass("future");
-      block9.addClass("present");
-    } else if (hour === 10) {
-      blocks.addClass("future");
-      block10.removeClass("future");
-      block10.addClass("present");
-      block9.removeClass("future");
-      block9.addClass("past");
-    } else if (hour === 11) {
-      blocks.addClass("future");
-      block11.removeClass("future");
-      block11.addClass("present");
-      block10.removeClass("future");
-      block10.addClass("past");
-      block9.removeClass("future");
-      block9.addClass("past");
-    } else if (hour === 12) {
-      blocks.addClass("future");
-      block12.removeClass("future");
-      block12.addClass("present");
-      block11.removeClass("future");
-      block11.addClass("past");
-      block10.removeClass("future");
-      block10.addClass("past");
-      block9.removeClass("future");
-      block9.addClass("past");
-    } else if (hour === 13) {
-      blocks.addClass("future");
-      block1.removeClass("future");
-      block1.addClass("present");
-      block12.removeClass("future");
-      block12.addClass("past");
-      block11.removeClass("future");
-      block11.addClass("past");
-      block10.removeClass("future");
-      block10.addClass("past");
-      block9.removeClass("future");
-      block9.addClass("past");
-    } else if (hour === 14) {
-      blocks.addClass("past");
-      block2.removeClass("past");
-      block2.addClass("present");
-      block3.removeClass("past");
-      block3.addClass("future");
-      block4.removeClass("past");
-      block4.addClass("future");
-      block5.removeClass("past");
-      block5.addClass("future");
-    } else if (hour === 15) {
-      blocks.addClass("past");
-      block3.removeClass("past");
-      block3.addClass("present");
-      block4.removeClass("past");
-      block4.addClass("future");
-      block5.removeClass("past");
-      block5.addClass("future");
-    } else if (hour === 16) {
-      blocks.addClass("past");
-      block4.removeClass("past");
-      block4.addClass("present");
-      block5.removeClass("past");
-      block5.addClass("future");
-    } else if (hour === 17) {
-      blocks.addClass("past");
-      block5.removeClass("past");
-      block5.addClass("present");
-    } else {
-      blocks.addClass("past");
+    function updateColors() {
+
+      //sets hour from moment.js to variable
+      var hour = parseInt(moment().format("H"));
+
+      if (hour < 9) {
+        blocks.addClass("future");
+      } else if (hour === 9) {
+        blocks.addClass("future");
+        block9.removeClass("future");
+        block9.addClass("present");
+      } else if (hour === 10) {
+        blocks.addClass("future");
+        block10.removeClass("future");
+        block10.addClass("present");
+        block9.removeClass("future");
+        block9.addClass("past");
+      } else if (hour === 11) {
+        blocks.addClass("future");
+        block11.removeClass("future");
+        block11.addClass("present");
+        block10.removeClass("future");
+        block10.addClass("past");
+        block9.removeClass("future");
+        block9.addClass("past");
+      } else if (hour === 12) {
+        blocks.addClass("future");
+        block12.removeClass("future");
+        block12.addClass("present");
+        block11.removeClass("future");
+        block11.addClass("past");
+        block10.removeClass("future");
+        block10.addClass("past");
+        block9.removeClass("future");
+        block9.addClass("past");
+      } else if (hour === 13) {
+        blocks.addClass("future");
+        block1.removeClass("future");
+        block1.addClass("present");
+        block12.removeClass("future");
+        block12.addClass("past");
+        block11.removeClass("future");
+        block11.addClass("past");
+        block10.removeClass("future");
+        block10.addClass("past");
+        block9.removeClass("future");
+        block9.addClass("past");
+      } else if (hour === 14) {
+        blocks.addClass("past");
+        block2.removeClass("past");
+        block2.addClass("present");
+        block3.removeClass("past");
+        block3.addClass("future");
+        block4.removeClass("past");
+        block4.addClass("future");
+        block5.removeClass("past");
+        block5.addClass("future");
+      } else if (hour === 15) {
+        blocks.addClass("past");
+        block3.removeClass("past");
+        block3.addClass("present");
+        block4.removeClass("past");
+        block4.addClass("future");
+        block5.removeClass("past");
+        block5.addClass("future");
+      } else if (hour === 16) {
+        blocks.addClass("past");
+        block4.removeClass("past");
+        block4.addClass("present");
+        block5.removeClass("past");
+        block5.addClass("future");
+      } else if (hour === 17) {
+        blocks.addClass("past");
+        block5.removeClass("past");
+        block5.addClass("present");
+      } else {
+        console.log("else")
+        blocks.addClass("past");
+      }
     }
+
+    updateColors();
 
     //get stored text from local storage (if it exists)
     var storedText = JSON.parse(localStorage.getItem("text"));
 
-    //if something was pulled, write the corresponding properties to each textarea
+    //if object was pulled, write the corresponding properties to each textarea
     if (storedText !== null) {
       block9.text(storedText[9]);
       block10.text(storedText[10]);
@@ -200,8 +213,10 @@
     //global object to store text in each of the textareas
     var textObj = { 9: "", 10: "", 11: "", 12: "", 1: "", 2: "", 3: "", 4: "", 5: "" };
 
-    //Event listener to save events in local storage
+    //Event listener to run when a save button is clicked
     $("button").on("click", function (event) {
+
+      //Save text in local storage 
       //set clickedBlock variable to data-time value on specific button
       var clickedBlock = $(this).data("time")
 
@@ -236,7 +251,7 @@
 
       //pull from localStorage if anything is there
       var storedText = JSON.parse(localStorage.getItem("text"));
-      //set pulled object to variable textObj
+      //set pulled object to variable textObj, if something was pulled
       if (storedText !== null) {
         textObj = storedText;
       }
@@ -249,8 +264,11 @@
       //reset the textObj variable after saving to local storage
       textObj = { 9: "", 10: "", 11: "", 12: "", 1: "", 2: "", 3: "", 4: "", 5: "" };
 
-    });
+      //run functions to update date and block colors
+      updateDay();
+      updateColors();
 
+    });
 
   </script>
 
