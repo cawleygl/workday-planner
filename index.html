@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
   <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <title>Work Day Scheduler</title>
 </head>
@@ -16,8 +17,9 @@
 <body>
   <header class="jumbotron">
     <h1 class="display-3">Work Day Scheduler</h1>
-    <p class="lead">A simple calendar app for scheduling your work day</p>
+    <p id="subtitle" >A simple calendar app for scheduling your work day</p>
     <p id="currentDay" class="lead"></p>
+    <p class="lead display-4"><i id="currentIcon"></i></p>
   </header>
   <div class="container">
     <!-- Timeblocks go here -->
@@ -93,7 +95,35 @@
 
     //write date in currentDay <p> at the top
     function updateDay() {
-      $("#currentDay").text(moment().format("dddd") + ", " + moment().format("MMMM Do"));
+      //sets hour from moment.js to variable
+      var hour = parseInt(moment().format("H"));
+      //select containers for date and icon
+      var currentDay = $("#currentDay");
+      var currentIcon = $("#currentIcon");
+
+      //Change text to "Good Morning! + date" or "Good Afternoon! + date" depending on time of day
+      if (hour < 12) {
+        currentDay.text("Good Morning! Today is " + moment().format("dddd") + ", " + moment().format("MMMM Do"));
+      } else if (hour >= 12 && hour <=17) {
+        currentDay.text("Good Afternoon! Today is " + moment().format("dddd") + ", " + moment().format("MMMM Do"));
+      } else {
+        currentDay.text("Good Evening! Today is " + moment().format("dddd") + ", " + moment().format("MMMM Do"));
+      }
+      
+      //Change icon depending on time of day
+
+      if (hour === 9) {
+        currentIcon.attr("class", "fas fa-cloud-sun")
+      } else if (hour > 9 && hour <= 13) {
+        currentIcon.attr("class", "fas fa-sun")
+      } else if (hour > 13 && hour <= 16) {
+        currentIcon.attr("class", "fas fa-cloud")
+      } else if (hour === 17) {
+        currentIcon.attr("class", "fas fa-cloud-moon")
+      } else {
+        currentIcon.attr("class", "fas fa-car-side")
+      }
+
     }
 
     updateDay();
