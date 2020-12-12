@@ -90,7 +90,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script type="text/javascript">
 
-    //sets hour from moment to variable
+    //sets hour from moment.js to variable
     var hour = moment().format("H");
     //write date in currentDay <p> at the top
     $("#currentDay").text(moment().format("dddd") + ", " + moment().format("MMMM Do"));
@@ -106,8 +106,7 @@
     var block4 = $("#block4");
     var block5 = $("#block5");
 
-    //Change timeblocks' color using classes depending on time of day
-
+    //Change timeblocks' color using classes depending on time of day (using hour variable)
     if (hour < 9) {
       blocks.addClass("future");
     } else if (hour === 9) {
@@ -187,7 +186,6 @@
 
     //if something was pulled, write the corresponding properties to each textarea
     if (storedText !== null) {
-      console.log("Writing stored values to textareas!");
       block9.text(storedText[9]);
       block10.text(storedText[10]);
       block11.text(storedText[11]);
@@ -206,7 +204,6 @@
     $("button").on("click", function (event) {
       //set clickedBlock variable to data-time value on specific button
       var clickedBlock = $(this).data("time")
-      console.log(clickedBlock)
 
       //depending on data value in clickedBlock, set the text from the corresponding textarea to var text
       if (clickedBlock === 9) {
@@ -245,13 +242,11 @@
       }
 
       //Using the clickedBlock variable as a key, set the corresponding property within the textObj object to the current text
-      console.log(text)
       textObj[clickedBlock] = text
-      console.log(textObj)
       //save the new object to local storage
       localStorage.setItem("text", JSON.stringify(textObj));
 
-      //reset the textObj variable locally
+      //reset the textObj variable after saving to local storage
       textObj = { 9: "", 10: "", 11: "", 12: "", 1: "", 2: "", 3: "", 4: "", 5: "" };
 
     });
