@@ -93,7 +93,7 @@
   <script type="text/javascript">
 
 
-    //write date in currentDay <p> at the top
+    //write date in currentDay <p> and icon in currentIcon <div> at the top
     function updateDay() {
       //sets hour from moment.js to variable
       var hour = parseInt(moment().format("H"));
@@ -101,7 +101,7 @@
       var currentDay = $("#currentDay");
       var currentIcon = $("#currentIcon");
 
-      //Change text to "Good Morning! + date" or "Good Afternoon! + date" depending on time of day
+      //Change text to a greeting + the date depending on time of day
       if (hour < 12) {
         currentDay.text("Good Morning! Today is " + moment().format("dddd") + ", " + moment().format("MMMM Do"));
       } else if (hour >= 12 && hour <=17) {
@@ -146,6 +146,7 @@
       //sets hour from moment.js to variable
       var hour = parseInt(moment().format("H"));
 
+      //changes classes according to hour variable
       if (hour < 9) {
         blocks.addClass("future");
       } else if (hour === 9) {
@@ -285,7 +286,7 @@
         textObj = storedText;
       }
 
-      //Using the clickedBlock variable as a key, set the corresponding property within the textObj object to the current text
+      //Using the clickedBlock variable as a key, set the corresponding property within the textObj object to the text variable
       textObj[clickedBlock] = text
       //save the new object to local storage
       localStorage.setItem("text", JSON.stringify(textObj));
