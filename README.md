@@ -1,4 +1,4 @@
-# workday-planner
+# Workday Planner
 
 ## Link
 https://cawleygl.github.io/workday-planner/
