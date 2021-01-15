@@ -88,3 +88,9 @@ textarea{
   font-size: 20px;
   transition: all .3s ease-in-out;
 }
+
+footer {
+  padding: 20px;
+  background-color: #fdfd96;
+  border-top: 5px solid rgb(83, 53, 42);
+}
